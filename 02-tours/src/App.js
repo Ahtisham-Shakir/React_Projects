@@ -27,8 +27,27 @@ function App() {
     fetchTours();
   }, []);
 
+  // Funtion to Remove Tour
+  const removeTour = id => {
+    const newTours = tours.filter(tour => tour.id !== id);
+    setTours(newTours);
+  }
+
+  // When No Tour Left
+  if (tours.length === 0) {
+    return (
+      <main>
+        <div className='title'>
+          <h2>No Tour Left</h2>
+        <button className='btn' onClick={fetchTours}>Refresh</button>
+        </div>
+      </main>
+    )
+  }
+
+  // if loading is not true then show tours component else Loading component
   return (loading ? <Loading /> :
-    (<main><Tours tours={tours}/></main>)
+    (<main><Tours tours={tours} removeTour={removeTour} /></main>)
   )
 }
 
