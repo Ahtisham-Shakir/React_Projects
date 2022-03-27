@@ -63,10 +63,10 @@ const Review = () => {
           <FaChevronRight />
         </button>
 
+      </div>
         <button className='random-btn' onClick={randomPerson}>
           Surprise Me
         </button>
-      </div>
     </article>
   )
 };
