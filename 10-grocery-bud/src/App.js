@@ -2,12 +2,28 @@ import React, { useState, useEffect } from 'react'
 import List from './List'
 import Alert from './Alert'
 
+// Function that get items from local storage and set the list state on reload
+const getLocalStorage = () => {
+  const items = localStorage.getItem('list');
+  if (items) {
+    return JSON.parse(localStorage.getItem('list'));
+  }
+  else {
+    return [];
+  }
+}
 function App() {
   const [name, setName] = useState('');
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(getLocalStorage());
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState('');
   const [alert, setAlert] = useState({ show: false, msg: '', type: '' });
+
+  // Every time list change it will be set to local storage
+  useEffect(() => {
+    localStorage.setItem('list', JSON.stringify(list));
+  }, [list]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,16 +33,16 @@ function App() {
     }
     else if (name && isEditing) {
       // deal with edit
-      setList(list.map(item=>{
-        if(editId === item.id){
-          return {...item,title:name}
+      setList(list.map(item => {
+        if (editId === item.id) {
+          return { ...item, title: name }
         }
         return item
       }))
       setIsEditing(false);
       setName('');
       setEditId(null);
-      showAlert(true,'value changed','success');
+      showAlert(true, 'value changed', 'success');
     }
     else {
       // show alert
