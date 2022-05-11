@@ -56,7 +56,7 @@
   }
 
 
-/* ======================== Media Queries (Medium Devices) ==================== */
+/* ======================== Media Queries (Small Devices) ==================== */
 @media screen and (max-width: 600px) {
     .experience-container{
         gap: 1rem;
