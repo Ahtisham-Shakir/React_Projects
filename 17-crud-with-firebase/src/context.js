@@ -1,11 +1,20 @@
-import React, {createContext, useContext} from "react";
+import React, {useState, createContext, useContext} from "react";
 
 const AppContext = createContext();
 
 const AppProvider = ({children})=>{
+    // State for input tags
+    const [data, setData] = useState({
+        name : '',
+        email: '',
+        age: '',
+        degree: '',
+    });
 
 
-    return <AppContext.Provider>{children}</AppContext.Provider>
+    return <AppContext.Provider value={{
+        data,setData
+    }}>{children}</AppContext.Provider>
 }
 
 
