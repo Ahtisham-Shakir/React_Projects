@@ -37,13 +37,13 @@ const Table = () => {
                                 usersList.map(({ name, email, age, degree, id }, i) => {
                                     return (
                                         <tr key={i}>
-                                            <th>{i}</th>
+                                            <th>{i+1}</th>
                                             <td>{name}</td>
                                             <td>{email}</td>
                                             <td>{age}</td>
                                             <td>{degree}</td>
                                             <td><FaRegEdit style={{ marginRight: '5px', cursor: "pointer" }} onClick={() => { update(id) }} />
-                                                <RiDeleteBin6Line style={{ cursor: "pointer" }}/></td>
+                                                <RiDeleteBin6Line style={{ cursor: "pointer" }} onClick={()=>{deleteUser(id)}}/></td>
                                         </tr>
                                     )
                                 })

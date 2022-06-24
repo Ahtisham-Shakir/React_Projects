@@ -1,6 +1,6 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
 import { firestore } from "./config/firebase";
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
 
 const AppContext = createContext();
 
@@ -100,6 +100,18 @@ const AppProvider = ({ children }) => {
 
 
 
+    // Function to delete user from firestore
+    const deleteUser = async (id) => {
+        try {
+            await deleteDoc(doc(firestore, collectionName, id));
+            alert("Document Deleted Successfully");
+        } catch (error) {
+            alert(error);
+        }
+    }
+
+   
+
 
 
     return <AppContext.Provider value={{
@@ -108,7 +120,8 @@ const AppProvider = ({ children }) => {
         usersList,
         isEditing,
         setIsEditing,
-        setEditId
+        setEditId,
+        deleteUser
     }}>{children}</AppContext.Provider>
 }
 
