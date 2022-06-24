@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useGlobalContext } from '../context';
 
+
 const Form = () => {
-    const {data, setData} = useGlobalContext();
+    const {data, setData, handleSubmit} = useGlobalContext();
 
     // onChange Function
     const handleChange = (e) => {
@@ -15,16 +16,9 @@ const Form = () => {
     }
 
 
-    // Adding users to firebase
-    const addUser = (e)=>{
-        e.preventDefault();
-        console.log(data);
-    }
-
-
     return (
         <div className='container w-50 box mb-5'>
-            <form className="row g-3">
+            <form className="row g-3" onSubmit={handleSubmit}>
                 <div className="col-md-6">
                     <label htmlFor="inputPassword4" className="form-label">Name</label>
                     <input type="text" name='name' value={data.name} onChange={handleChange} className="form-control" id="inputPassword4" />
@@ -46,7 +40,7 @@ const Form = () => {
                 </div>
 
                 <div className="col-12 text-center">
-                    <button type="submit" className="btn btn-primary" onClick={addUser}>Add User</button>
+                    <button type="submit" className="btn btn-primary">Add User</button>
                 </div>
             </form>
         </div>
