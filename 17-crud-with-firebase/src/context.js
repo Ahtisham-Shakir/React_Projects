@@ -1,6 +1,6 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import { firestore } from "./config/firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, onSnapshot } from "firebase/firestore";
 
 const AppContext = createContext();
 
@@ -13,10 +13,15 @@ const AppProvider = ({ children }) => {
         degree: '',
     });
 
+    const [usersList, setUsersList] = useState([]);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editId, setEditId] = useState(null);
+
+    // Reference For Firebase
     const collectionName = 'users';
     const collectionRef = collection(firestore, collectionName);
 
-    
+
     // Function to validate object
     const validate = (obj) => {
         for (let key in obj) {
@@ -28,11 +33,47 @@ const AppProvider = ({ children }) => {
     }
 
 
+    // Reading users from Firebase
+    useEffect(() => {
+        const readDocs = async () => {
+            let array = [];
+            const querySnapshot = await getDocs(collectionRef);
+            querySnapshot.forEach((docs) => {
+                array.push({ ...docs.data(), id: docs.id });
+            });
+            setUsersList(array);
+        }
+        readDocs();
+    }, [collectionRef]);
+
+
     // Function Form Submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(data);
-        if (validate(data)) {
+
+
+        // If editing is enable then document will be update
+         if (isEditing && validate(data)) {
+            const docRef = doc(firestore, collectionName, editId);
+            updateDoc(docRef, data)
+                .then((doc) => {
+                    console.log(doc.data(), doc.id);
+                });
+                // Resetting fields
+                setData({
+                    name: '',
+                    email: '',
+                    age: '',
+                    degree: ''
+                })
+            alert("Updated Successfully");
+            setIsEditing(false);
+            setEditId(null);
+        }
+
+        // if above condition is false then document will be added
+       else if (validate(data)) {
             try {
                 const docRef = await addDoc(collectionRef, data);
                 setData({
@@ -49,6 +90,8 @@ const AppProvider = ({ children }) => {
                 alert("Some issue occured please try again");
             }
         }
+
+        
         else {
             alert("Please Fill all the fields");
         }
@@ -56,9 +99,16 @@ const AppProvider = ({ children }) => {
 
 
 
+
+
+
     return <AppContext.Provider value={{
         data, setData,
-        handleSubmit
+        handleSubmit,
+        usersList,
+        isEditing,
+        setIsEditing,
+        setEditId
     }}>{children}</AppContext.Provider>
 }
 

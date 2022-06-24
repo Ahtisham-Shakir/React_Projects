@@ -3,7 +3,7 @@ import { useGlobalContext } from '../context';
 
 
 const Form = () => {
-    const {data, setData, handleSubmit} = useGlobalContext();
+    const {data, setData, handleSubmit, isEditing} = useGlobalContext();
 
     // onChange Function
     const handleChange = (e) => {
@@ -40,7 +40,7 @@ const Form = () => {
                 </div>
 
                 <div className="col-12 text-center">
-                    <button type="submit" className="btn btn-primary">Add User</button>
+                    <button type="submit" className="btn btn-primary">{isEditing?"Update":"Add user"}</button>
                 </div>
             </form>
         </div>
