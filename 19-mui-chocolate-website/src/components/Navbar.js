@@ -5,7 +5,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 function Navbar() {
   return (
-    <AppBar position="fixed">
+    <AppBar position="relative">
       <Toolbar>
         <Typography variant="h6" flexGrow={1}>
           Blissfull Bytes
