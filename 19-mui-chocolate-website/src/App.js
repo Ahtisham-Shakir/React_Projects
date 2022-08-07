@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./components/Navbar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import HeroSection from "./components/HeroSection";
+import CakeSection from "./components/CakeSection";
 
 const theme = createTheme({
   palette: {
@@ -16,6 +17,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Navbar />
       <HeroSection />
+      <CakeSection />
     </ThemeProvider>
   );
 }
