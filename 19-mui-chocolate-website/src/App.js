@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import HeroSection from "./components/HeroSection";
 import CakeSection from "./components/CakeSection";
+import Contact from "./components/Contact";
 
 const theme = createTheme({
   palette: {
@@ -18,6 +19,7 @@ function App() {
       <Navbar />
       <HeroSection />
       <CakeSection />
+      <Contact />
     </ThemeProvider>
   );
 }

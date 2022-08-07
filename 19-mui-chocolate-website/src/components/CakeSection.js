@@ -52,8 +52,8 @@ function CakeSection() {
         justifyContent="space-evenly"
         sx={{ flexWrap: "wrap" }}
       >
-        {cakes.map((cake) => (
-          <Card sx={{ maxWidth: "300px", mb: 2 }}>
+        {cakes.map((cake, i) => (
+          <Card sx={{ maxWidth: "300px", mb: 2 }} key={i}>
             <CardMedia
               component="img"
               height="200"
